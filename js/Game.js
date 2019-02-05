@@ -35,9 +35,9 @@ OregonH.Game.init = function init() {
     distance: 0,
     crew: 30,
     food: 80,
-    oxen: 2,
+    oxen: 5,
     money: 300,
-    firepower: 2,
+    firepower: 12,
   });
 
   // pass references
