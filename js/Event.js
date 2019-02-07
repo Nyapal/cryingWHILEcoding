@@ -48,13 +48,8 @@ OregonH.Event.eventTypes = [
     value: 20,
     text: 'Found wild berries. Food added: ',
   },
-  {
-    type: 'STAT-CHANGE',
-    notification: 'positive',
-    stat: 'food',
-    value: 20,
-    text: 'Found wild berries. Food added: ',
-  },
+  
+  
   {
     type: 'STAT-CHANGE',
     notification: 'positive',
@@ -112,9 +107,14 @@ OregonH.Event.eventTypes = [
   },
 ];
 
+function randomInt(n) {
+  const {floor, random} = Math
+  return floor(random() * n) // 0 to n -1 
+}
+
 OregonH.Event.generateEvent = function generateEvent() {
   // pick random one
-  const eventIndex = Math.floor(Math.random() * this.eventTypes.length);
+  const eventIndex = randomInt(this.eventTypes.length)
   const eventData = this.eventTypes[eventIndex];
 
   // events that consist in updating a stat

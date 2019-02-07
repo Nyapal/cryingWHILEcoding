@@ -1,6 +1,7 @@
 // UI.js
 
 // eslint-disable-next-line no-var
+// must remain var, bc OregonH is shared with other JS files
 var OregonH = OregonH || {};
 
 OregonH.UI = {};
@@ -29,7 +30,7 @@ OregonH.UI.refreshStats = function refreshStats() {
   document.getElementById('stat-weight').innerHTML = `${ceil(weight)}/${capacity}`;
 
   // update caravan position
-  document.getElementById('caravan').style.left = `${(380 * distance / OregonH.FINAL_DISTANCE)}px`;
+  document.getElementById('caravan').style.left = `${(400 * distance / OregonH.FINAL_DISTANCE)}px`;
 };
 
 // show attack
@@ -161,6 +162,7 @@ OregonH.UI.buyProduct = function buyProduct(product) {
   OregonH.UI.caravan[product.item] += +product.qty;
 
   OregonH.UI.notify(`Bought ${product.qty} x ${product.item}`, 'positive');
+
 
   // update weight
   OregonH.UI.caravan.updateWeight();
