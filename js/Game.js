@@ -21,7 +21,7 @@ BartC.ENEMY_GOLD_AVG = 50;
 //---------------------------------------------------
 // Game 
 
-BartC.Game = {};
+
 
 class Game {
   init () {
@@ -148,4 +148,6 @@ class Game {
 
 }
 
-const game = new Game()
+BartC.Game = new Game();
+console.log(Game)
+BartC.Game.init()

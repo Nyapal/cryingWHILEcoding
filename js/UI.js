@@ -1,10 +1,8 @@
 // UI.js
 
 // eslint-disable-next-line no-var
-// must remain var, bc OregonH is shared with other JS files
-var OregonH = OregonH || {};
-
-OregonH.UI = {};
+// must remain var, bc BartC is shared with other JS files
+var BartC = BartC || {};
 
 //--------------------------------------------------
 // UI
@@ -38,7 +36,7 @@ class UI {
     document.getElementById('stat-weight').innerHTML = `${ceil(weight)}/${capacity}`;
 
     // update caravan position
-    document.getElementById('caravan').style.left = `${(400 * distance / OregonH.FINAL_DISTANCE)}px`;
+    document.getElementById('caravan').style.left = `${(400 * distance / BartC.FINAL_DISTANCE)}px`;
   }
 
   // show attack
@@ -69,7 +67,7 @@ class UI {
     const { firepower, gold } = this;
 
     // check we can afford it
-    if (firepower > OregonH.Caravan.firepower) {
+    if (firepower > BartC.Caravan.firepower) {
       OregonH.UI.notify('Not enough firepower to fight', 'negative');
       return false;
     }
@@ -134,9 +132,9 @@ class UI {
         if (target.tagName === 'BUTTON') {
           // resume journey
           shopDiv.classList.add('hidden');
-          OregonH.UI.game.resumeJourney();
+          BartC.UI.game.resumeJourney();
         } else if (target.tagName === 'DIV' && target.className.match(/product/)) {
-          OregonH.UI.buyProduct({
+          BartC.UI.buyProduct({
             item: target.getAttribute('data-item'),
             qty: target.getAttribute('data-qty'),
             price: target.getAttribute('data-price'),
@@ -161,23 +159,25 @@ class UI {
   // buy product
   buyProduct(product) {
     // check we can afford it
-    if (product.price > OregonH.UI.caravan.money) {
-      OregonH.UI.notify('Not enough money', 'negative');
+    if (product.price > BartC.UI.caravan.money) {
+      BartC.UI.notify('Not enough money', 'negative');
       return false;
     }
     
-    OregonH.UI.caravan.money -= product.price;
+    BartC.UI.caravan.money -= product.price;
     
-    OregonH.UI.caravan[product.item] += +product.qty;
+    BartC.UI.caravan[product.item] += +product.qty;
     
-    OregonH.UI.notify(`Bought ${product.qty} x ${product.item}`, 'positive');
+    BartC.UI.notify(`Bought ${product.qty} x ${product.item}`, 'positive');
     
     // update weight
-    OregonH.UI.caravan.updateWeight();
+    BartC.UI.caravan.updateWeight();
     
     // update visuals
-    OregonH.UI.refreshStats();
+    BartC.UI.refreshStats();
     return true;
   }
 
 }
+
+BartC.UI = new UI();

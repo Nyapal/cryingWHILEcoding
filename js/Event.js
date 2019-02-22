@@ -3,6 +3,97 @@
 // eslint-disable-next-line no-var
 var BartC = BartC || {};
 
+// *********************************************
+// Event 
+
+class Event {
+  constructor() {
+
+  }
+
+  randomInt(n) {
+    const {floor, random} = Math 
+    return floor(random() * n)
+  }
+
+  generateEvent() {
+    // pick random one
+    const eventIndex = this.randomInt(this.eventTypes.length)
+    const eventData = this.eventTypes[eventIndex];
+
+    // events that consist in updating a stat
+    if (eventData.type === 'STAT-CHANGE') {
+      this.stateChangeEvent(eventData);
+    } else if (eventData.type === 'SHOP') {
+      // shops
+      // pause game
+      this.game.pauseJourney();
+
+      // notify user
+      this.ui.notify(eventData.text, eventData.notification);
+
+      // prepare event
+      this.shopEvent(eventData);
+    } else if (eventData.type === 'ATTACK') {
+      // attacks
+      // pause game
+      this.game.pauseJourney();
+
+      // notify user
+      this.ui.notify(eventData.text, eventData.notification);
+
+      // prepare event
+      this.attackEvent(eventData);
+    }
+
+  }
+
+  stateChangeEvent(eventData) {
+    // can't have negative quantities
+    if (eventData.value + this.caravan[eventData.stat] >= 0) {
+      this.caravan[eventData.stat] += eventData.value;
+      this.ui.notify(eventData.text + Math.abs(eventData.value), eventData.notification);
+    }
+
+  }
+
+  shopEvent(eventData) {
+    // number of products for sale
+    const numProds = Math.ceil(Math.random() * 4);
+
+    // product list
+    const products = [];
+    let j;
+    let priceFactor;
+
+    for (let i = 0; i < numProds; i += 1) {
+      // random product
+      j = Math.floor(Math.random() * eventData.products.length);
+
+      // multiply price by random factor +-30%
+      priceFactor = 0.7 + 0.6 * Math.random();
+
+      products.push({
+        item: eventData.products[j].item,
+        qty: eventData.products[j].qty,
+        price: Math.round(eventData.products[j].price * priceFactor),
+      });
+    }
+
+    this.ui.showShop(products);
+
+  }
+
+  attackEvent() {
+    const firepower = Math.round((0.7 + 0.6 * Math.random()) * BartC.ENEMY_FIREPOWER_AVG);
+    const gold = Math.round((0.7 + 0.6 * Math.random()) * BartC.ENEMY_GOLD_AVG);
+    this.ui.showAttack(firepower, gold);
+  }
+}
+
+BartC.Event = new Event()
+
+
 BartC.Event.eventTypes = [
   {
     type: 'STAT-CHANGE',
@@ -102,91 +193,3 @@ BartC.Event.eventTypes = [
     text: 'Bandits are attacking you',
   },
 ];
-
-// *********************************************
-// Event 
-
-class Event {
-  constructor() {
-
-  }
-
-  randomInt(n) {
-    const {floor, random} = Math 
-    return floor(random() * n)
-  }
-
-  generateEvent() {
-    // pick random one
-    const eventIndex = randomInt(this.eventTypes.length)
-    const eventData = this.eventTypes[eventIndex];
-
-    // events that consist in updating a stat
-    if (eventData.type === 'STAT-CHANGE') {
-      this.stateChangeEvent(eventData);
-    } else if (eventData.type === 'SHOP') {
-      // shops
-      // pause game
-      this.game.pauseJourney();
-
-      // notify user
-      this.ui.notify(eventData.text, eventData.notification);
-
-      // prepare event
-      this.shopEvent(eventData);
-    } else if (eventData.type === 'ATTACK') {
-      // attacks
-      // pause game
-      this.game.pauseJourney();
-
-      // notify user
-      this.ui.notify(eventData.text, eventData.notification);
-
-      // prepare event
-      this.attackEvent(eventData);
-    }
-
-  }
-
-  stateChangeEvent(eventData) {
-    // can't have negative quantities
-    if (eventData.value + this.caravan[eventData.stat] >= 0) {
-      this.caravan[eventData.stat] += eventData.value;
-      this.ui.notify(eventData.text + Math.abs(eventData.value), eventData.notification);
-    }
-
-  }
-
-  shopEvent(eventData) {
-    // number of products for sale
-    const numProds = Math.ceil(Math.random() * 4);
-
-    // product list
-    const products = [];
-    let j;
-    let priceFactor;
-
-    for (let i = 0; i < numProds; i += 1) {
-      // random product
-      j = Math.floor(Math.random() * eventData.products.length);
-
-      // multiply price by random factor +-30%
-      priceFactor = 0.7 + 0.6 * Math.random();
-
-      products.push({
-        item: eventData.products[j].item,
-        qty: eventData.products[j].qty,
-        price: Math.round(eventData.products[j].price * priceFactor),
-      });
-    }
-
-    this.ui.showShop(products);
-
-  }
-
-  attackEvent() {
-    const firepower = Math.round((0.7 + 0.6 * Math.random()) * BartC.ENEMY_FIREPOWER_AVG);
-    const gold = Math.round((0.7 + 0.6 * Math.random()) * BartC.ENEMY_GOLD_AVG);
-    this.ui.showAttack(firepower, gold);
-  }
-}
