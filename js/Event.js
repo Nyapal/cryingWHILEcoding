@@ -1,16 +1,7 @@
-// Event.js
-
 // eslint-disable-next-line no-var
 var BartC = BartC || {};
 
-// *********************************************
-// Event 
-
 class Event {
-  constructor() {
-
-  }
-
   randomInt(n) {
     const {floor, random} = Math 
     return floor(random() * n)
@@ -92,7 +83,6 @@ class Event {
 }
 
 BartC.Event = new Event()
-
 
 BartC.Event.eventTypes = [
   {

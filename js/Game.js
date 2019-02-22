@@ -1,5 +1,3 @@
-// Game.js
-
 // eslint-disable-next-line no-var
 var BartC = BartC || {};
 
@@ -20,8 +18,6 @@ BartC.ENEMY_GOLD_AVG = 50;
 
 //---------------------------------------------------
 // Game 
-
-
 
 class Game {
   init () {
@@ -145,9 +141,7 @@ class Game {
     this.gameActive = true;
     this.step();
   }
-
 }
 
 BartC.Game = new Game();
-console.log(Game)
 BartC.Game.init()

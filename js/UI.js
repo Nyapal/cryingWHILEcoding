@@ -1,17 +1,8 @@
-// UI.js
-
 // eslint-disable-next-line no-var
 // must remain var, bc BartC is shared with other JS files
 var BartC = BartC || {};
 
-//--------------------------------------------------
-// UI
-
 class UI {
-  constructor() {
-
-  }
-
   // show a notification in the message area
   notify(message, type) {
     document.getElementById('updates-area').innerHTML = `<div class="update-${type}">Day ${Math.ceil(this.caravan.day)}: ${message}</div> ${document.getElementById('updates-area').innerHTML}`;
@@ -177,7 +168,6 @@ class UI {
     BartC.UI.refreshStats();
     return true;
   }
-
 }
 
 BartC.UI = new UI();

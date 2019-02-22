@@ -1,4 +1,3 @@
-// Caravan.js
 // eslint-disable-next-line no-var
 var BartC = BartC || {}
 
@@ -16,9 +15,6 @@ BartC.FINAL_DISTANCE = 1000;
 BartC.EVENT_PROBABILITY = 0.15;
 BartC.ENEMY_FIREPOWER_AVG = 5;
 BartC.ENEMY_GOLD_AVG = 50;
-
-// -------------------------------------------------
-// Caravan 
 
 class Caravan {
   constructor() {
@@ -97,4 +93,3 @@ class Caravan {
 }
 
 BartC.Caravan = new Caravan();
-
